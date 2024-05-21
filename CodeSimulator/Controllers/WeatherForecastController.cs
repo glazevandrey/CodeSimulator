@@ -92,7 +92,7 @@ namespace CodeSimulator.Controllers
     }
     public class COODE {
         public string code { get; set; }
-        public int issueId { get; set; }
+        public string issueId { get; set; }
     }
     [ApiController]
     [Route("[controller]")]
@@ -181,7 +181,7 @@ namespace CodeSimulator.Controllers
             code = codeDto.code;
             string expectedOutput = "Hello, world!"; // Ожидаемый вывод
 
-            var res = ExecuteCode(code, expectedOutput, codeDto.issueId);
+            var res = ExecuteCode(code, expectedOutput, Int32.Parse(codeDto.issueId));
 
             var model = new CompileResult();
             model.IssueId = 1;
