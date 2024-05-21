@@ -114,7 +114,7 @@ namespace CodeSimulator.Controllers
 
 
         
-        static Dictionary<bool, string> ExecuteCode(string code, string expectedOutput)
+        static Dictionary<bool, string> ExecuteCode(string code, string expectedOutput, int issueId)
         {
             var res = new Dictionary<bool, string>();
             var typesToReference = new Type[1] { typeof(Console) };
@@ -145,9 +145,20 @@ namespace CodeSimulator.Controllers
                 {
                     ms.Seek(0, SeekOrigin.Begin);
                     Assembly assembly = Assembly.Load(ms.ToArray());
+                    Type programType = null;
+                    MethodInfo mainMethod = null;
 
-                    Type programType = assembly.GetType("Program");
-                    MethodInfo mainMethod = programType.GetMethod("Main", BindingFlags.Static | BindingFlags.Public);
+                    if (issueId == 1)
+                    {
+                        programType = assembly.GetType("Lion");
+                        mainMethod = programType.GetMethod("Jump", BindingFlags.Static | BindingFlags.Public);
+                    }
+                    else
+                    {
+                        programType = assembly.GetType("Program");
+                    }
+                    
+                    
 
                     using (StringWriter sw = new StringWriter())
                     {

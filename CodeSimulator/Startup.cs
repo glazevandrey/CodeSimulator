@@ -44,7 +44,6 @@ namespace CodeSimulator
             }
 
             app.UseHttpsRedirection();
-            app.UseCors("AllowAll");
 
             app.UseRouting();
             app.UseCors("AllowAll");
