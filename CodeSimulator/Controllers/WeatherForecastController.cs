@@ -92,6 +92,8 @@ namespace CodeSimulator.Controllers
     }
     public class COODE {
         public string code { get; set; }
+        public string expectedOutput { get; set; }
+
         public string issueId { get; set; }
     }
     [ApiController]
@@ -179,7 +181,7 @@ namespace CodeSimulator.Controllers
         {
 
             code = codeDto.code;
-            string expectedOutput = "Hello, world!"; // Ожидаемый вывод
+            string expectedOutput = codeDto.expectedOutput; // Ожидаемый вывод
 
             var res = ExecuteCode(code, expectedOutput, Int32.Parse(codeDto.issueId));
 
