@@ -93,6 +93,7 @@ namespace CodeSimulator.Controllers
     public class COODE {
         public string code { get; set; }
         public string expectedOutput { get; set; }
+        public string userId { get; set; }
 
         public string issueId { get; set; }
     }
@@ -186,8 +187,8 @@ namespace CodeSimulator.Controllers
             var res = ExecuteCode(code, expectedOutput, Int32.Parse(codeDto.issueId));
 
             var model = new CompileResult();
-            model.IssueId = 1;
-            model.UserId = 1;
+            model.UserId = Int64.Parse(codeDto.userId);
+            model.IssueId = Int32.Parse(codeDto.issueId);
 
             if (res.ContainsKey(false))
             {
@@ -212,7 +213,7 @@ namespace CodeSimulator.Controllers
     public class CompileResult
     {
         public int IssueId { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public bool Successed { get; set; }
         public string Result { get; set; }
         // Класс для перенаправления вывода консоли
