@@ -155,7 +155,7 @@ namespace CodeSimulator.Controllers
 
                     if (issueId == 1)
                     {
-                        programType = assembly.GetType("Zoo.Lion");
+                        programType = assembly.GetType("Lion");
                         mainMethod = programType.GetMethod("Jump", BindingFlags.Static | BindingFlags.Public);
                     }
                     else
