@@ -160,9 +160,11 @@ namespace CodeSimulator.Controllers
                     else
                     {
                         programType = assembly.GetType("Program");
+                        mainMethod = programType.GetMethod("Main");
+
                     }
-                    
-                    
+
+
 
                     using (StringWriter sw = new StringWriter())
                     {
