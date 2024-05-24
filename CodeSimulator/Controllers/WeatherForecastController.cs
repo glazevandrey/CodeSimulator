@@ -118,7 +118,7 @@ namespace CodeSimulator.Controllers
 
 
         
-        static Dictionary<bool, string> ExecuteCode(string code, string expectedOutput, int issueId)
+        static Dictionary<bool, string> ExecuteCode(string code, int issueId)
         {
             var res = new Dictionary<bool, string>();
             var typesToReference = new Type[1] { typeof(Console) };
@@ -186,7 +186,7 @@ namespace CodeSimulator.Controllers
             code = codeDto.code;
             string expectedOutput = codeDto.expectedOutput; // Ожидаемый вывод
 
-            var res = ExecuteCode(code, expectedOutput, Int32.Parse(codeDto.issueId));
+            var res = ExecuteCode(code,  Int32.Parse(codeDto.issueId));
 
             var model = new CompileResult();
             model.UserId = Int64.Parse(codeDto.userId);
@@ -203,9 +203,16 @@ namespace CodeSimulator.Controllers
             }
             else
             {
-                model.Successed = true;
-
-                model.Result = res[true];
+                if (expectedOutput.Trim() == model.Result.Trim())
+                {
+                    model.Successed = true;
+                    model.Result = res[true];
+                }
+                else 
+                {
+                    model.Successed = false;
+                    model.Result = res[true];
+                }
             }
             var m = Newtonsoft.Json.JsonConvert.SerializeObject(model);
             return m;
