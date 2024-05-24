@@ -11,6 +11,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 using System.Runtime.Loader;
+using System.Web;
 
 
 namespace CodeSimulator.Controllers
@@ -184,7 +185,7 @@ namespace CodeSimulator.Controllers
         {
 
             code = codeDto.code;
-            string expectedOutput = codeDto.expectedOutput; // Ожидаемый вывод
+            string expectedOutput =HttpUtility.HtmlDecode(codeDto.expectedOutput);
 
             var res = ExecuteCode(code,  Int32.Parse(codeDto.issueId));
 
@@ -203,7 +204,7 @@ namespace CodeSimulator.Controllers
             }
             else
             {
-                if (expectedOutput.Trim() == model.Result.Trim())
+                if (expectedOutput.Trim() == res.First().Value.Trim())
                 {
                     model.Successed = true;
                     model.Result = res[true];
