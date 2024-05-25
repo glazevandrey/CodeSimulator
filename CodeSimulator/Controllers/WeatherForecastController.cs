@@ -111,7 +111,6 @@ namespace CodeSimulator.Controllers
                         Console.WriteLine(""Hello, world!"");
                     }
                 }";
-        string expectedOutput = "Hello, world!"; // Ожидаемый вывод
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -156,7 +155,7 @@ namespace CodeSimulator.Controllers
                     if (issueId == 1)
                     {
                         programType = assembly.GetType("Lion");
-                        mainMethod = programType.GetMethod("Jump", BindingFlags.Static | BindingFlags.Public);
+                        mainMethod = programType.GetMethod("Jump");
                     }
                     else
                     {
@@ -211,8 +210,24 @@ namespace CodeSimulator.Controllers
                 }
                 else 
                 {
-                    model.Successed = false;
-                    model.Result = res[true];
+                    if (expectedOutput.Contains(";-;"))
+                    {
+                        var split = expectedOutput.Split(";-;");
+                        foreach (var item in split)
+                        {
+                            if(res.First().Value.Trim() == item.Trim())
+                            {
+                                model.Successed = true;
+                                model.Result = res[true];
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        model.Successed = false;
+                        model.Result = res[true];
+                    }   
                 }
             }
             var m = Newtonsoft.Json.JsonConvert.SerializeObject(model);
