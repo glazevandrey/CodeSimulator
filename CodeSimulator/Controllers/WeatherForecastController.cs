@@ -177,7 +177,6 @@ namespace CodeSimulator.Controllers
                         Console.SetOut(sw); // Перенаправление вывода консоли
                         mainMethod.Invoke(null, null);
                         string output = sw.ToString().Trim(); // Получение вывода консоли
-                        _logger.LogInformation("OUT = " + output);
                         res.Add(true, output);
                         return res;
                     }
@@ -210,7 +209,7 @@ namespace CodeSimulator.Controllers
             }
             else
             {
-                if (expectedOutput.Trim() == res.First().Value.Trim())
+                if (expectedOutput.Trim().Replace("\n", string.Empty).Replace("\r", string.Empty) == res.First().Value.Trim().Replace("\n", string.Empty).Replace("\r", string.Empty))
                 {
                     model.Successed = true;
                     model.Result = res[true];
