@@ -102,6 +102,12 @@ namespace CodeSimulator.Controllers
     [Route("[controller]")]
     public class ExecuteController : ControllerBase
     {
+        private readonly ILogger _logger;
+        public ExecuteController(ILogger<ExecuteController> logger)
+        {
+            _logger = logger;
+        }
+
         string code = @"
                 using System;
                 class Program
@@ -118,7 +124,7 @@ namespace CodeSimulator.Controllers
 
 
         
-        static Dictionary<bool, string> ExecuteCode(string code, int issueId)
+        Dictionary<bool, string> ExecuteCode(string code, int issueId)
         {
             var res = new Dictionary<bool, string>();
             var typesToReference = new Type[1] { typeof(Console) };
@@ -171,6 +177,7 @@ namespace CodeSimulator.Controllers
                         Console.SetOut(sw); // Перенаправление вывода консоли
                         mainMethod.Invoke(null, null);
                         string output = sw.ToString().Trim(); // Получение вывода консоли
+                        _logger.LogInformation("OUT = " + output);
                         res.Add(true, output);
                         return res;
                     }
