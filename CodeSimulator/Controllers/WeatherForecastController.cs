@@ -95,6 +95,7 @@ namespace CodeSimulator.Controllers
         public string code { get; set; }
         public string expectedOutput { get; set; }
         public string userId { get; set; }
+        public string _int { get; set; }
 
         public string issueId { get; set; }
     }
@@ -232,8 +233,17 @@ namespace CodeSimulator.Controllers
                     }
                     else
                     {
-                        model.Successed = false;
-                        model.Result = res[true];
+                        if(Int32.Parse(codeDto._int) > 0)
+                        {
+                            model.Successed = true;
+                            model.Result = res[true];
+                        }
+                        else
+                        {
+                            model.Successed = false;
+                            model.Result = res[true];
+                        }
+
                     }   
                 }
             }
