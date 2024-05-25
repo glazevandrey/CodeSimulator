@@ -95,9 +95,10 @@ namespace CodeSimulator.Controllers
         public string code { get; set; }
         public string expectedOutput { get; set; }
         public string userId { get; set; }
-        public string _int { get; set; }
 
         public string issueId { get; set; }
+        public string num { get; set; }
+
     }
     [ApiController]
     [Route("[controller]")]
@@ -211,7 +212,10 @@ namespace CodeSimulator.Controllers
             {
                 model.SuccessedCompiled = true;
 
-                if (expectedOutput.Trim().Replace("\n", string.Empty).Replace("\r", string.Empty) == res.First().Value.Trim().Replace("\n", string.Empty).Replace("\r", string.Empty))
+                var exp = expectedOutput.Trim().Replace("\n", string.Empty).Replace("\r", string.Empty);
+                var fact = res.First().Value.Trim().Replace("\n", string.Empty).Replace("\r", string.Empty);
+
+                if ( exp == fact)
                 {
                     model.Successed = true;
                     model.Result = res[true];
@@ -233,7 +237,7 @@ namespace CodeSimulator.Controllers
                     }
                     else
                     {
-                        if(Int32.Parse(codeDto._int) > 0)
+                        if(Int32.Parse(codeDto.num) > 0)
                         {
                             model.Successed = true;
                             model.Result = res[true];
