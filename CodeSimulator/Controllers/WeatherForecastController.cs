@@ -197,10 +197,9 @@ namespace CodeSimulator.Controllers
             var model = new CompileResult();
             model.UserId = Int64.Parse(codeDto.userId);
             model.IssueId = Int32.Parse(codeDto.issueId);
-
             if (res.ContainsKey(false))
             {
-                model.Successed = false;
+                model.SuccessedCompiled = false;
 
                 foreach (var item in res)
                 {
@@ -209,6 +208,8 @@ namespace CodeSimulator.Controllers
             }
             else
             {
+                model.SuccessedCompiled = true;
+
                 if (expectedOutput.Trim().Replace("\n", string.Empty).Replace("\r", string.Empty) == res.First().Value.Trim().Replace("\n", string.Empty).Replace("\r", string.Empty))
                 {
                     model.Successed = true;
@@ -245,7 +246,9 @@ namespace CodeSimulator.Controllers
     {
         public int IssueId { get; set; }
         public long UserId { get; set; }
-        public bool Successed { get; set; }
+        public bool SuccessedCompiled { get; set; }
+        public bool Successed{ get; set; }
+
         public string Result { get; set; }
         // Класс для перенаправления вывода консоли
         public class ConsoleOutput : StringWriter
